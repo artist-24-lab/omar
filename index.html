@@ -4,288 +4,193 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>OnPoint Mechanical & V&S Mechanical</title>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <!-- EmailJS SDK -->
-  <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <style>
-    /* Reset and base styles */
-    * {
+    body {
+      font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      background: linear-gradient(135deg, #f0f4f7, #e0eafc);
       color: #333;
-      line-height: 1.6;
     }
+
     header {
-      background: rgba(0, 0, 0, 0.7);
-      color: #fff;
-      padding: 1rem 2rem;
-      position: fixed;
-      width: 100%;
+      background: #004080;
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
       top: 0;
       z-index: 1000;
     }
-    header h1 {
-      font-size: 1.8rem;
-    }
-    nav {
-      margin-top: 0.5rem;
-    }
-    nav a {
-      color: #fff;
-      margin-right: 1.5rem;
-      text-decoration: none;
+
+    .logo {
+      font-size: 1.6em;
       font-weight: bold;
     }
-    .hero {
-      height: 100vh;
-      background: url('https://dl.dropboxusercontent.com/scl/fi/c8jaa2rqm22jvnzjl1hzu/Screenshot-2025-05-18-201120.png?rlkey=sgvgdmydq7fz7626636f6xikf&dl=0') center/cover no-repeat;
+
+    nav {
       display: flex;
+      gap: 30px;
       align-items: center;
-      justify-content: center;
+    }
+
+    .nav-item {
+      position: relative;
+      cursor: pointer;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-item:hover {
+      color: #ffcc00;
+    }
+
+    .services-dropdown {
+      display: none;
+      position: absolute;
+      top: 30px;
+      left: 0;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      min-width: 220px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      z-index: 1001;
+    }
+
+    .services-dropdown li {
+      list-style: none;
+      padding: 12px 20px;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .services-dropdown li:hover {
+      background-color: #f0f0f0;
+    }
+
+    .services-menu:hover .services-dropdown {
+      display: block;
+    }
+
+    .hero {
       text-align: center;
-      color: #fff;
+      padding: 100px 20px;
+      background: url('https://images.unsplash.com/photo-1581090700227-4c0c9c252f4c') no-repeat center center/cover;
+      color: white;
       position: relative;
     }
+
     .hero::after {
-      content: '';
+      content: "";
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0,0,0,0.4);
+      z-index: 0;
     }
+
     .hero-content {
       position: relative;
       z-index: 1;
     }
-    .hero-content h2 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
+
+    .hero h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
     }
-    .hero-content p {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
+
+    .hero p {
+      font-size: 1.2em;
     }
-    .btn {
-      background: #00796b;
-      color: #fff;
-      padding: 0.8rem 1.5rem;
-      border: none;
-      border-radius: 5px;
-      text-decoration: none;
-      font-size: 1rem;
-      transition: background 0.3s ease;
-    }
-    .btn:hover {
-      background: #004d40;
-    }
-    .services {
-      padding: 4rem 2rem;
-      background: #f1f1f1;
+
+    .contact-section {
       text-align: center;
+      padding: 60px 20px;
     }
-    .services h3 {
-      font-size: 2rem;
-      margin-bottom: 2rem;
-    }
-    .service-cards {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 2rem;
-    }
-    .card {
-      background: #fff;
-      padding: 2rem;
+
+    .contact-section img {
       border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      width: 300px;
-      transition: transform 0.3s ease;
+      width: 160px;
+      height: auto;
+      margin-bottom: 20px;
     }
-    .card:hover {
-      transform: translateY(-5px);
-    }
-    .card h4 {
-      margin-bottom: 1rem;
-      color: #00796b;
-    }
-    .quote-section {
-      padding: 4rem 2rem;
-      background: #ffffff;
-      text-align: center;
-    }
-    .quote-section h3 {
-      font-size: 2rem;
-      margin-bottom: 2rem;
-    }
-    form {
-      max-width: 600px;
-      margin: 0 auto;
-      text-align: left;
-    }
-    form label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: bold;
-    }
-    form input, form textarea {
-      width: 100%;
-      padding: 0.8rem;
-      margin-bottom: 1.5rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    form button {
-      background: #00796b;
-      color: #fff;
-      padding: 0.8rem 1.5rem;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    form button:hover {
-      background: #004d40;
-    }
-    .contact {
-      padding: 2rem;
-      background: #f1f1f1;
-      text-align: center;
-    }
-    .contact h3 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-    }
-    .contact p {
-      margin-bottom: 1rem;
-    }
-    .whatsapp-link {
+
+    .quote-btn,
+    .whatsapp-btn {
       display: inline-block;
-      background: #25D366;
-      color: #fff;
-      padding: 0.8rem 1.5rem;
-      border-radius: 5px;
+      padding: 12px 25px;
+      margin: 10px;
+      border-radius: 6px;
       text-decoration: none;
       font-weight: bold;
-      transition: background 0.3s ease;
+      color: white;
+      background-color: #007bff;
+      transition: background 0.3s;
     }
-    .whatsapp-link:hover {
-      background: #128C7E;
+
+    .whatsapp-btn {
+      background-color: #25D366;
     }
+
+    .quote-btn:hover,
+    .whatsapp-btn:hover {
+      background-color: #0056b3;
+    }
+
     footer {
-      background: #00796b;
-      color: #fff;
+      background: #003060;
+      color: #ccc;
       text-align: center;
-      padding: 1rem;
-    }
-    @media (max-width: 768px) {
-      .service-cards {
-        flex-direction: column;
-        align-items: center;
-      }
+      padding: 20px;
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>OnPoint Mechanical & V&S Mechanical</h1>
+    <div class="logo">OnPoint & V&S Mechanical</div>
     <nav>
-      <a href="#services">Services</a>
-      <a href="#quote">Get a Quote</a>
-      <a href="#contact">Contact</a>
+      <div class="nav-item">Home</div>
+      <div class="nav-item services-menu">
+        Services
+        <ul class="services-dropdown">
+          <li>HVAC Installation</li>
+          <li>AC Repair & Maintenance</li>
+          <li>Duct Cleaning</li>
+          <li>Commercial HVAC</li>
+          <li>Residential HVAC</li>
+          <li>Emergency Repairs</li>
+          <li>Maintenance Contracts</li>
+        </ul>
+      </div>
+      <a href="#contact" class="nav-item">Contact</a>
     </nav>
   </header>
 
   <section class="hero">
     <div class="hero-content">
-      <h2>Expert HVAC Solutions</h2>
-      <p>Reliable Heating, Cooling, and Duct Cleaning Services</p>
-      <a href="#quote" class="btn">Request a Quote</a>
+      <h1>Reliable HVAC & Duct Cleaning Services</h1>
+      <p>Your comfort is our priority – Serving homes & businesses with excellence.</p>
     </div>
   </section>
 
-  <section class="services" id="services">
-    <h3>Our Services</h3>
-    <div class="service-cards">
-      <div class="card">
-        <h4>HVAC Installation</h4>
-        <p>Professional installation of heating and cooling systems tailored to your needs.</p>
-      </div>
-      <div class="card">
-        <h4>HVAC Maintenance</h4>
-        <p>Regular maintenance to ensure optimal performance and longevity of your systems.</p>
-      </div>
-      <div class="card">
-        <h4>Duct Cleaning</h4>
-        <p>Comprehensive duct cleaning services to improve air quality and system efficiency.</p>
-      </div>
-      <div class="card">
-        <h4>Emergency Repairs</h4>
-        <p>24/7 emergency repair services to address unexpected HVAC issues promptly.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="quote-section" id="quote">
-    <h3>Get a Quote</h3>
-    <form id="contact-form">
-      <label for="from_name">Name</label>
-      <input type="text" id="from_name" name="from_name" required>
-
-      <label for="from_email">Email</label>
-      <input type="email" id="from_email" name="from_email" required>
-
-      <label for="phone">Phone</label>
-      <input type="tel" id="phone" name="phone" required>
-
-      <label for="message">Service Details</label>
-      <textarea id="message" name="message" rows="5" required></textarea>
-
-      <button type="submit">Send Request</button>
-    </form>
-  </section>
-
-  <section class="contact" id="contact">
-    <h3>Contact Us</h3>
-    <p>Owner: Omar Ingrenio</p>
-    <p>Phone: <a href="tel:+13018069499">+1 (301) 806-9499</a></p>
-    <p>Email: <a href="mailto:info@onpointmechanical.com">info@onpointmechanical.com</a></p>
-    <a href="https://wa.me/13018069499?text=Hi%20Omar%2C%20I'm%20interested%20in%20your%20HVAC%20services." class="whatsapp-link" target="_blank">Message on WhatsApp</a>
+  <section class="contact-section" id="contact">
+    <h2>Meet the Owner</h2>
+    <img src="https://dl.dropboxusercontent.com/scl/fi/c8jaa2rqm22jvnzjl1hzu/Screenshot-2025-05-18-201120.png?rlkey=sgvgdmydq7fz7626636f6xikf&dl=0" alt="Omar Ingrenio">
+    <p><strong>Omar Ingrenio</strong><br>Partner at OnPoint & V&S Mechanical</p>
+    
+    <a href="https://wa.me/13018069499" class="whatsapp-btn" target="_blank">Message Us on WhatsApp</a>
+    <a href="#quote" class="quote-btn">Get a Quote</a>
   </section>
 
   <footer>
-    <p>&copy; 2025 OnPoint Mechanical & V&S Mechanical. All rights reserved.</p>
+    &copy; 2025 OnPoint & V&S Mechanical. All rights reserved.
   </footer>
-
-  <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function () {
-      emailjs.init("keEkiBQiWGQXotYFx");
-
-      const form = document.getElementById("contact-form");
-
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        emailjs.sendForm("service_xt86x49", "template_tplscy8", this)
-          .then(function () {
-            alert("✅ Your request has been sent successfully!");
-            form.reset();
-          }, function (error) {
-            console.error("❌ Failed to send request:", error);
-            alert("❌ Failed to send your request. Please try again later.");
-          });
-      });
-    });
-  </script>
 
 </body>
 </html>
